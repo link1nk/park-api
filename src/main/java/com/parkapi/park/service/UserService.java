@@ -1,5 +1,7 @@
 package com.parkapi.park.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,5 +33,10 @@ public class UserService {
 		User user = findById(id);
 		user.setPassword(password);
 		return user;
+	}
+
+	@Transactional
+	public List<User> findAll() {
+		return userRepository.findAll();
 	}
 }

@@ -1,5 +1,7 @@
 package com.parkapi.park.web.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,5 +39,11 @@ public class UserController {
 	public ResponseEntity<User> updatePassword(@PathVariable Long id, @RequestBody User user) {
 		User userUpdated = userService.updatePassword(id, user.getPassword());
 		return ResponseEntity.ok().body(userUpdated);
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<User>> findAll() {
+		List<User> allUsers = userService.findAll();
+		return ResponseEntity.ok().body(allUsers);
 	}
 }
