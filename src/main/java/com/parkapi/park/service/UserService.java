@@ -23,7 +23,13 @@ public class UserService {
 	public User findById(Long id) {
 		return userRepository.findById(id).orElseThrow(
 				() -> new RuntimeException("Usuario não encontrado")
- 		);
-				
+ 		);		
+	}
+
+	@Transactional
+	public User updatePassword(Long id, String password) {
+		User user = findById(id);
+		user.setPassword(password);
+		return user;
 	}
 }
