@@ -20,6 +20,8 @@ import com.parkapi.park.web.dto.UsuarioCreateDTO;
 import com.parkapi.park.web.dto.UsuarioResponseDTO;
 import com.parkapi.park.web.dto.mapper.UserMapper;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("api/v1/users")
 public class UserController {
@@ -28,7 +30,7 @@ public class UserController {
 	private UserService userService;
 	
 	@PostMapping
-	public ResponseEntity<UsuarioResponseDTO> create(@RequestBody UsuarioCreateDTO userDTO) {
+	public ResponseEntity<UsuarioResponseDTO> create(@Valid @RequestBody UsuarioCreateDTO userDTO) {
 		User userSaved = userService.save(UserMapper.toUser(userDTO));
 		return ResponseEntity.status(HttpStatus.CREATED).body(UserMapper.toDTO(userSaved));
 	}
@@ -41,7 +43,7 @@ public class UserController {
 	
 	@PatchMapping("/{id}")
 	public ResponseEntity<Void> updatePassword(@PathVariable Long id, @RequestBody UserPasswordDTO dto) {
-		User userUpdated = userService.updatePassword(id, dto.getSenhaAtual(), dto.getNovaSenha(), dto.getConfirmaSenha());
+		userService.updatePassword(id, dto.getSenhaAtual(), dto.getNovaSenha(), dto.getConfirmaSenha());
 		return ResponseEntity.noContent().build();
 	}
 	
