@@ -8,12 +8,22 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.parkapi.park.exception.EntityNotFoundException;
 import com.parkapi.park.exception.UsernameUniqueViolationException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestControllerAdvice
 public class ApiExceptionHandler {
+	
+	@ExceptionHandler(EntityNotFoundException.class)
+	public ResponseEntity<ErrorMessage> EntityNotFoundException(RuntimeException ex,
+			                                                            HttpServletRequest request){
+		return ResponseEntity
+				.status(HttpStatus.NOT_FOUND)
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(new ErrorMessage(request, HttpStatus.NOT_FOUND, ex.getMessage()));
+	}
 
 	@ExceptionHandler(UsernameUniqueViolationException.class)
 	public ResponseEntity<ErrorMessage> UsernameUniqueViolationException(RuntimeException ex,
