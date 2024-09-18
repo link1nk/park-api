@@ -1,9 +1,18 @@
 package com.parkapi.park.web.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class UserPasswordDTO {
 
+	@NotBlank
+	@Size(min = 6, max = 6)
 	private String senhaAtual;
+	@NotBlank
+	@Size(min = 6, max = 6)
 	private String novaSenha;
+	@NotBlank
+	@Size(min = 6, max = 6)
 	private String confirmaSenha;
 	
 	public UserPasswordDTO() {
