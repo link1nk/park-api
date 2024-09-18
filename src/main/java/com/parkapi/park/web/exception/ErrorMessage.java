@@ -7,6 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import jakarta.servlet.http.HttpServletRequest;
 
 public class ErrorMessage {
@@ -16,6 +19,7 @@ public class ErrorMessage {
 	private int status;
 	private String statusText;
 	private String message;
+	@JsonInclude(Include.NON_NULL)
 	private Map<String, String> erros;
 	
 	public ErrorMessage() {
