@@ -3,9 +3,11 @@ package com.parkapi.park.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.parkapi.park.entities.User;
+import com.parkapi.park.exception.UsernameUniqueViolationException;
 import com.parkapi.park.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
@@ -18,7 +20,11 @@ public class UserService {
 	
 	@Transactional
 	public User save(User user) {
-		return userRepository.save(user);
+		try {
+			return userRepository.save(user);
+		} catch(DataIntegrityViolationException e) {
+			throw new UsernameUniqueViolationException(String.format("Username {%s} ja cadastrado", user.getUsername()));
+		}
 	}
 
 	@Transactional
