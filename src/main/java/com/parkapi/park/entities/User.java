@@ -35,8 +35,8 @@ public class User implements Serializable {
 	private String password;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name="role", nullable=false, length=25)
-	private Role role;
+	@Column(name="role", length=25)
+	private Role role = Role.ROLE_CLIENT;
 	
 	@Column(name="dateCreate")
 	private LocalDateTime dateCreate;
@@ -153,6 +153,8 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + "]";
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", role=" + role
+				+ ", dateCreate=" + dateCreate + ", dateUpdate=" + dateUpdate + ", createdBy=" + createdBy
+				+ ", modifiedBy=" + modifiedBy + "]";
 	}
 }
