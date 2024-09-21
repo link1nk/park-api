@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.parkapi.park.entities.User;
 import com.parkapi.park.exception.EntityNotFoundException;
+import com.parkapi.park.exception.PasswordInvalidException;
 import com.parkapi.park.exception.UsernameUniqueViolationException;
 import com.parkapi.park.repository.UserRepository;
 
@@ -37,13 +38,13 @@ public class UserService {
 	@Transactional
 	public User updatePassword(Long id, String senhaAtual, String novaSenha, String confirmaSenha) {
 		if (!novaSenha.equals(confirmaSenha)) {
-			throw new RuntimeException("Nova senha nao confere com confirmação de senha");
+			throw new PasswordInvalidException("Nova senha nao confere com confirmação de senha");
 		}
 		
 		User user = findById(id);
 		
 		if (!user.getPassword().equals(senhaAtual)) {
-			throw new RuntimeException("Sua senha não confere");
+			throw new PasswordInvalidException("Sua senha não confere");
 		}
 		
 		user.setPassword(novaSenha);
